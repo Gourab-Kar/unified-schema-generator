@@ -1,4 +1,4 @@
 export const config = {
   outputSchemaType: 'json',
-  cleanUpObjects: ['Address']
+  cleanUpObjects: ['address', 'tags']
 }
