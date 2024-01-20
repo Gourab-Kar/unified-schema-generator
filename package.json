@@ -1,0 +1,16 @@
+{
+  "name": "unified-schema-generator",
+  "version": "1.0.0",
+  "description": "An npm project that can take a json description and generator various schemas like graphql, mongoose, etc",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ./src/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "lodash": "4.17.21"
+  },
+  "author": "",
+  "license": "ISC"
+}

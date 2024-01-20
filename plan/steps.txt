@@ -1,0 +1,26 @@
+schema transformer:
+    1. check the output type and call the respective transformer
+    2. if anything is found common that shall be exported to t
+
+json transformer
+    1. traverse through the schema
+        1. for every schema go through the fields
+        2. check for fieldType
+            1. Number, return 0
+            2. String, return ''
+            3. refSchema, check refFormation
+                1. for Object, reparse the schema and start all over again
+                2. for array, create a blank array and reparse the schema and start all over again
+
+gql transformer
+    1. traverse through every schema
+    2. register the schemaNames first
+        1. create an object of schemas identified by their schemaLabels
+        2. parse each schema
+            1. traverse through every field
+                1. if it is a number or a string, simply wrap it with quotes
+                2. if it is a refSchema, check refFormation
+                  1. for Object, reparse the schema and start all over again
+                  2. for array, create a blank array and reparse the schema and start all over again
+
+
