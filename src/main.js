@@ -3,6 +3,7 @@ import {getUnifiedSchema} from "./files/input/unifiedSchema.js";
 import {logNotify, logSpreaded, logWarning} from "./utils/consoleLogger.js";
 import {config} from "../config.js";
 import {transformToJSON} from "./generators/json/jsonTransformer.js";
+import {transformToGql} from "./generators/gql/gqlTransformer.js";
 
 export const postGenCleanups = ({schema = {}, cleanupIds = []}) => {
   const updatedSchema = _.cloneDeep(schema);
@@ -30,6 +31,9 @@ export const transformSchema = (unifiedSchema) => {
       break;
     }
     case 'gql': {
+      const gqlTypeDef = transformToGql(unifiedSchema);
+
+      logSpreaded(gqlTypeDef);
       break;
     }
     case 'mongoose': {
