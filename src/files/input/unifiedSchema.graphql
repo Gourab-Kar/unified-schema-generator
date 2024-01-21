@@ -1,0 +1,15 @@
+type User {
+    userId: Int
+    userName: String
+    age: Int
+    address: Address
+}
+
+type Address {
+    flat: String
+    building: String
+    street: String
+    area: String
+    state: String
+    pinCode: Int
+}

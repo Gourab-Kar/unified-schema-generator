@@ -1,39 +1,35 @@
 import _ from "lodash";
-import {getUnifiedSchema} from "./files/input/unifiedSchema.js";
-import {logNotify, logSpreaded, logWarning} from "./utils/consoleLogger.js";
+import * as fs from "fs";
+import path, {dirname} from "path";
+import {logSpreaded, logWarning} from "./utils/consoleLogger.js";
 import {config} from "../config.js";
-import {transformToJSON} from "./generators/json/jsonTransformer.js";
-import {transformToGql} from "./generators/gql/gqlTransformer.js";
+import {getUnifiedSchemaFromGraphQl} from "./generators/gql/graphqlToJson.js";
+import {convertToJsonSchema} from "./generators/json/jsonTransformer.js";
 
-export const postGenCleanups = ({schema = {}, cleanupIds = []}) => {
-  const updatedSchema = _.cloneDeep(schema);
-
-  cleanupIds.map(id => {
-    delete updatedSchema[id];
-  });
-
-  return updatedSchema;
-}
-
-export const transformSchema = (unifiedSchema) => {
+export const transformSchema = () => {
   const {outputSchemaType = 'json', cleanUpObjects = []} = config;
+  const graphqlPath = "/src/files/input/unifiedSchema.graphql";
+  const pwd = dirname("./");
+
+  const filePath = path.resolve(pwd + graphqlPath);
+  // console.log(filePath);
+
+  const graphqlContent = fs.readFileSync(filePath, {encoding: 'utf8', flag: 'r'});
+
+  const schemaValueMap = getUnifiedSchemaFromGraphQl(graphqlContent);
+
+  // console.log(schemaValueMap);
 
   switch (outputSchemaType) {
     case "json": {
-      // logNotify(`going to transform into ${outputSchemaType} `);
-      const transformedSchema = transformToJSON(unifiedSchema);
-      const cleanedSchema = postGenCleanups({
-        schema: transformedSchema,
-        cleanupIds: cleanUpObjects
-      });
-
-      logSpreaded(cleanedSchema);
+      const jsonSchema = convertToJsonSchema(schemaValueMap);
+      logSpreaded(jsonSchema);
       break;
     }
     case 'gql': {
-      const gqlTypeDef = transformToGql(unifiedSchema);
+      // const gqlTypeDef = transformToGql(unifiedSchema);
 
-      logSpreaded(gqlTypeDef);
+      // logSpreaded(gqlTypeDef);
       break;
     }
     case 'mongoose': {
@@ -45,4 +41,4 @@ export const transformSchema = (unifiedSchema) => {
   }
 };
 
-transformSchema(getUnifiedSchema());
+transformSchema();
