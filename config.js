@@ -1,5 +1,5 @@
 export const config = {
-  outputSchemaType: 'json',
+  outputSchemaType: 'mongoose',
   cleanUpObjects: ['address', 'tags']
 }
 

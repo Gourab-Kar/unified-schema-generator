@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import {getDefaultJsonValues} from "./json/jsonTransformer.js";
+import {getDefaultMongooseTypes} from "./mongoose/mongooseTransformer.js";
 
 let outputType='';
 
@@ -9,7 +10,7 @@ export const getDefaultValueByOutput = (dataType) => {
       return getDefaultJsonValues(dataType);
     }
     case "mongoose": {
-
+      return getDefaultMongooseTypes(dataType);
     }
   }
 }
