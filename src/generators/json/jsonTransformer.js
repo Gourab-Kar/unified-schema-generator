@@ -7,11 +7,9 @@ export const getDefaultValue = ({schemaMap, value = "String"}) => {
 
   switch (value) {
     case "String": {
-      // console.log("Found a string");
       return '';
     }
     case "Int": {
-      // console.log("Found a number");
       return 0;
     }
     default: {
@@ -33,8 +31,6 @@ export const parseField = ({schemaMap, field}) => {
 
   fieldObj[fieldArr[0].trim()] = getDefaultValue({schemaMap, value});
 
-  // console.log(fieldObj);
-
   return fieldObj;
 }
 
@@ -54,7 +50,6 @@ export const convertToJsonSchema = (schemaMap) => {
   let jsonSchema = {};
 
   Object.keys(schemaMap).map(schemaName => {
-    // console.log(schemaMap[schemaName]);
     const fieldsArr = schemaMap[schemaName].split("\n");
     const schema = parseSchema({
       schemaMap,
