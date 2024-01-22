@@ -1,6 +1,6 @@
 export const config = {
   outputSchemaType: 'mongoose',
-  cleanUpObjects: ['address', 'tags']
+  cleanUpObjects: ['Address', 'Tags']
 }
 
 // export const config = {

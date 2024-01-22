@@ -4,6 +4,7 @@ import {logSpreaded} from "./utils/consoleLogger.js";
 import {config} from "../config.js";
 import {getUnifiedSchemaFromGraphQl} from "./generators/gql/graphqlToJson.js";
 import {getTransformedSchema} from "./generators/transformer.js";
+import {cleanObjects} from "./utils/objectCleaner.js";
 
 export const transformSchema = () => {
   const {outputSchemaType = 'json', cleanUpObjects = []} = config;
@@ -16,11 +17,14 @@ export const transformSchema = () => {
   const graphqlContent = fs.readFileSync(filePath, {encoding: 'utf8', flag: 'r'});
 
   const schemaValueMap = getUnifiedSchemaFromGraphQl(graphqlContent);
-  const jsonSchema = getTransformedSchema({
+  let schema = getTransformedSchema({
     schemaMap: schemaValueMap,
     outputSchemaType
   });
-  logSpreaded(jsonSchema);
+
+  schema = cleanObjects({schema, cleanUpObjects});
+
+  logSpreaded(schema);
 };
 
 transformSchema();
